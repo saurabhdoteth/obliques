@@ -1,0 +1,7 @@
+{
+  "name": "obliques",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}
