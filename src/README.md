@@ -39,9 +39,7 @@ We welcome contributions from the community! If you're interested in contributin
 
 ## Authors
 
-- **Saurabh Doteth**
-  - GitHub: [saurabhdoteth](https://github.com/saurabhdoteth)
-  - X: [saurabhdoteth](https://x.com/saurabhdoteth)
+- [@saurabhdoteth](https://github.com/saurabhdoteth) (X: [@saurabhdoteth](https://x.com/saurabhdoteth))
 
 ## License
 
