@@ -1,0 +1,47 @@
+{
+  "name": "obliques",
+  "description": "Identity Interface for Onchain Namespaces",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./_cjs/index.js",
+  "module": "./_esm/index.js",
+  "types": "./_types/index.d.ts",
+  "typings": "./_types/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "*",
+    "!**/*.tsbuildinfo",
+    "!tsconfig.build.json"
+  ],
+  "exports": {
+    ".": {
+      "types": "./_types/index.d.ts",
+      "import": "./_esm/index.js",
+      "default": "./_cjs/index.js"
+    }
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "viem": "^2.22.2"
+  },
+  "license": "MIT",
+  "homepage": "https://obliques.me",
+  "repository": "saurabhdoteth/obliques",
+  "authors": [
+    "saurabhdoteth"
+  ],
+  "keywords": [
+    "identity",
+    "namespace",
+    "ens",
+    "basename",
+    "ethereum",
+    "web3",
+    "typescript"
+  ]
+}
