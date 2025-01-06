@@ -1,8 +1,9 @@
 import { getEnsName } from "../resolvers/ens/getEnsName.js";
 import { getBasename } from "../resolvers/basename/getBasename.js";
 import type { Address } from "viem";
+import { getCyberName } from "../resolvers/cyber/getCyberName.js";
 
-export type Namespace = "ens" | "basename";
+export type Namespace = "ens" | "basename" | "cyber";
 
 export type GetNameParameters = {
   address: Address;
@@ -17,6 +18,7 @@ const resolvers: Record<
 > = {
   ens: getEnsName,
   basename: getBasename,
+  cyber: getCyberName,
 };
 
 /**
@@ -39,6 +41,7 @@ export async function getNames({
   const result: GetNameReturnType = {
     ens: null,
     basename: null,
+    cyber: null,
   };
 
   await Promise.all(
@@ -48,13 +51,7 @@ export async function getNames({
         if (name) {
           result[namespace] = name;
         }
-      } catch (error) {
-        // Handle error gracefully, possibly logging or assigning null
-        console.error(
-          `Error fetching ${namespace} name for address ${address}:`,
-          error
-        );
-      }
+      } catch {}
     })
   );
 
