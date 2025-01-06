@@ -1,5 +1,5 @@
 import type { Chain } from "viem";
-import { mainnet } from "viem/chains";
+import { cyber, mainnet } from "viem/chains";
 
 /**
  * Converts a chain ID to a SLIP-0044 coin type hex string for reverse chain resolution.
@@ -14,13 +14,11 @@ import { mainnet } from "viem/chains";
  * @returns The coin type as an uppercase hex string, or "addr" for mainnet
  * @example
  * convertChainToCoinType(mainnet) // Returns "addr"
- * convertChainToCoinType(base) // Returns "0x80002105"
+ * convertChainToCoinType(base) // Returns "80002105"
  */
 
 export function convertChainToCoinType(chain: Chain) {
-  if (chain.id === mainnet.id) {
-    return "addr";
-  }
+  if (chain.id === mainnet.id || chain.id === cyber.id) return "addr";
 
   const cointype = (0x80000000 | chain.id) >>> 0;
   return cointype.toString(16).toLocaleUpperCase();
