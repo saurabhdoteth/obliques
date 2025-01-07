@@ -1,9 +1,9 @@
 import { getEnsName } from "../resolvers/ens/getEnsName.js";
-import { getBasename } from "../resolvers/basename/getBasename.js";
+import { getBaseName } from "../resolvers/basename/getBasename.js";
 import type { Address } from "viem";
 import { getCyberName } from "../resolvers/cyber/getCyberName.js";
 
-export type Namespace = "ens" | "basename" | "cyber";
+export type Namespace = "ens" | "base" | "cyber";
 
 export type GetNameParameters = {
   address: Address;
@@ -17,7 +17,7 @@ const resolvers: Record<
   (params: Pick<GetNameParameters, "address">) => Promise<string | null>
 > = {
   ens: getEnsName,
-  basename: getBasename,
+  base: getBaseName,
   cyber: getCyberName,
 };
 
@@ -30,9 +30,9 @@ const resolvers: Record<
  * @example
  * const names = await getNames({
  *   address: '0xC79E675A8Dd11fBEc7Ea1042efB6686C9DfdC57E',
- *   namespaces: ['ens', 'basename']
+ *   namespaces: ['ens', 'base']
  * })
- * // { ens: 'obliques.eth', basename: obliques.base.eth }
+ * // { ens: 'obliques.eth', base: obliques.base.eth }
  */
 export async function getNames({
   address,
@@ -40,7 +40,7 @@ export async function getNames({
 }: GetNameParameters): Promise<GetNameReturnType> {
   const result: GetNameReturnType = {
     ens: null,
-    basename: null,
+    base: null,
     cyber: null,
   };
 

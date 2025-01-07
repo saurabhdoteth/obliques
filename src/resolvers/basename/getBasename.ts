@@ -4,19 +4,19 @@ import type { Address } from "viem";
 import L2ResolverAbi from "./abis/L2ResolverAbi.js";
 import { convertReverseNodeToBytes } from "../../utils/convertReverseNodeToBytes.js";
 
-type GetBasenameParameters = {
+type GetBaseNameParameters = {
   address: Address;
 };
 
-type GetBasenameReturnType = string | null;
+type GetBaseNameReturnType = string | null;
 
 const RESOLVER_ADDRESS = "0xC6d566A56A1aFf6508b41f6c90ff131615583BCD";
 
 /**
  * Resolves an address to basename. Only works with base mainnet.
  *
- * @param {GetBasenameParameters} params - Object containing address to resolve
- * @returns {Promise<GetBasenameReturnType>} The basename or null if not found
+ * @param {GetBaseNameParameters} params - Object containing address to resolve
+ * @returns {Promise<GetBaseNameReturnType>} The basename or null if not found
  * @example
  * const name = await getBasename({
  *   address: "0xC79E675A8Dd11fBEc7Ea1042efB6686C9DfdC57E"
@@ -24,18 +24,18 @@ const RESOLVER_ADDRESS = "0xC6d566A56A1aFf6508b41f6c90ff131615583BCD";
  * // 'obliques.base.eth'
  */
 
-export async function getBasename({
+export async function getBaseName({
   address,
-}: Pick<GetBasenameParameters, "address">): Promise<GetBasenameReturnType> {
+}: Pick<GetBaseNameParameters, "address">): Promise<GetBaseNameReturnType> {
   const client = getPublicClient(base);
   const addressReverseNode = convertReverseNodeToBytes(address, base);
 
-  const basename = await client.readContract({
+  const name = await client.readContract({
     abi: L2ResolverAbi,
     address: RESOLVER_ADDRESS,
     functionName: "name",
     args: [addressReverseNode],
   });
-  if (basename) return basename;
+  if (name) return name;
   return null;
 }
