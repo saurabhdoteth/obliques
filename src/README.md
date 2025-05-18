@@ -15,18 +15,63 @@ Identity Interface for Onchain Namespaces
 Obliques is a robust identity interface designed for onchain namespaces. It provides a seamless way to interact with and manage onchain identities, ensuring compatibility and ease of use.
 
 ```typescript
-import { getNames } from 'obliques'
+import { getNames } from 'obliques';
 
-  const names = await getNames({
-    address: '0xC79E675A8Dd11fBEc7Ea1042efB6686C9DfdC57E',
-    namespaces: ['ens', 'basename']
-  })
+// Basic usage
+const names = await getNames({
+  address: '0xC79E675A8Dd11fBEc7Ea1042efB6686C9DfdC57E',
+  namespaces: ['ens', 'base', 'cyber'],
+});
+// {
+//   ens: 'obliques.eth',
+//   base: 'obliques.base.eth',
+//   cyber: 'obliques.cyber' // or null if not registered
+// }
 
-  // {
-  //   ens: 'obliques.eth',
-  //   basename: 'obliques.base.eth'
-  // }
+// Advanced: Using custom RPC clients for specific namespaces
+import { createPublicClient, http } from 'viem';
+import { mainnet, base, cyber } from 'viem/chains';
+
+const customEnsClient = createPublicClient({
+  chain: mainnet,
+  transport: http('https://my.custom.ens.rpc'),
+});
+const customBaseClient = createPublicClient({
+  chain: base,
+  transport: http('https://my.custom.base.rpc'),
+});
+const customCyberClient = createPublicClient({
+  chain: cyber,
+  transport: http('https://my.custom.cyber.rpc'),
+});
+
+const namesWithCustomClients = await getNames({
+  address: '0xC79E675A8Dd11fBEc7Ea1042efB6686C9DfdC57E',
+  namespaces: ['ens', 'base', 'cyber'],
+  config: {
+    ens: { client: customEnsClient },
+    base: { client: customBaseClient },
+    cyber: { client: customCyberClient },
+  },
+});
+// {
+//   ens: 'obliques.eth',
+//   base: 'obliques.base.eth',
+//   cyber: 'obliques.cyber'
+// }
 ```
+
+### Supported Namespaces
+
+- **ens**: Ethereum Name Service on Ethereum Mainnet
+- **base**: Base Name Service on Base Network
+- **cyber**: Cyber Name Service on Cyber Network
+
+### Custom RPC Support
+
+You can specify a custom RPC endpoint for any namespace by providing a custom `client` in the `config` object. This is useful for advanced use-cases, such as using private or geo-optimized RPCs.
+
+
 
 ### Supported Namespaces
 
