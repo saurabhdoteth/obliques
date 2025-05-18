@@ -1,4 +1,8 @@
-import type { GetEnsNameParameters, GetEnsNameReturnType } from "viem";
+import type {
+  GetEnsNameParameters,
+  GetEnsNameReturnType,
+  PublicClient,
+} from "viem";
 import { getPublicClient } from "../../utils/getPublicClient.js";
 import { mainnet } from "viem/chains";
 
@@ -8,9 +12,14 @@ import { mainnet } from "viem/chains";
  * @see https://viem.sh/docs/ens/actions/getEnsName
  */
 
+export type EnsResolverConfig = { client?: PublicClient };
+
 export async function getEnsName({
   address,
-}: Pick<GetEnsNameParameters, "address">): Promise<GetEnsNameReturnType> {
-  const client = getPublicClient(mainnet);
-  return client.getEnsName({ address });
+  config,
+}: Pick<GetEnsNameParameters, "address"> & {
+  config?: EnsResolverConfig;
+}): Promise<GetEnsNameReturnType> {
+  const _client = config?.client ?? getPublicClient(mainnet);
+  return _client.getEnsName({ address });
 }

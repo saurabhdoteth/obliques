@@ -1,4 +1,4 @@
-import type { Address } from "viem";
+import type { Address, PublicClient } from "viem";
 import { getPublicClient } from "../../utils/getPublicClient.js";
 import { cyber } from "viem/chains";
 import { convertReverseNodeToBytes } from "../../utils/convertReverseNodeToBytes.js";
@@ -24,13 +24,16 @@ const RESOLVER_ADDRESS = "0xfb2f304c1fcd6b053ee033c03293616d5121944b";
  * // 'obliques.cyber'
  */
 
+export type CyberResolverConfig = { client?: PublicClient };
+
 export async function getCyberName({
   address,
-}: Pick<GetCyberNameParameters, "address">): Promise<GetCyberNameReturnType> {
-  const client = getPublicClient(cyber);
+  config,
+}: Pick<GetCyberNameParameters, "address"> & { config?: CyberResolverConfig }): Promise<GetCyberNameReturnType> {
+  const _client = config?.client ?? getPublicClient(cyber);
   const addressReverseNode = convertReverseNodeToBytes(address, cyber);
 
-  const name = await client.readContract({
+  const name = await _client.readContract({
     abi: CyberPublicResolverAbi,
     address: RESOLVER_ADDRESS,
     functionName: "name",
